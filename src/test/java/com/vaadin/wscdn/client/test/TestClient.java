@@ -11,6 +11,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -147,17 +148,7 @@ public class TestClient {
     private static File createTempDirectory(String prefix) throws IOException {
         final File temp;
 
-        temp = File.createTempFile(prefix, Long.toString(System.nanoTime()));
-
-        if (!(temp.delete())) {
-            throw new IOException(
-                    "Could not delete temp file: " + temp.getAbsolutePath());
-        }
-
-        if (!(temp.mkdir())) {
-            throw new IOException("Could not create temp directory: "
-                    + temp.getAbsolutePath());
-        }
+        temp = Files.createTempDirectory(prefix + Long.toString(System.nanoTime())).toFile();
 
         return (temp);
     }
